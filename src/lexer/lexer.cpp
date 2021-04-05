@@ -1,5 +1,14 @@
 #include "include/lexer.h"
 
+ceres::Lexer::Lexer() {
+	// Populate the list of reserved keywords
+	reserved_kw.push_back("let");
+	reserved_kw.push_back("if");
+	reserved_kw.push_back("else");
+	reserved_kw.push_back("func");
+	reserved_kw.push_back("print");
+}
+
 std::vector<ceres::Token> ceres::Lexer::scan(std::string s) {
 	this->src = s;
 
@@ -27,10 +36,10 @@ std::vector<ceres::Token> ceres::Lexer::scan(std::string s) {
 				push_token(Token(TokenKind::OP_DIV, ""));
 				break;
 			case '(':
-				push_token(Token(TokenKind::OP_LPAREN, ""));
+				push_token(Token(TokenKind::OP_LPAREN, "("));
 				break;
 			case ')':
-				push_token(Token(TokenKind::OP_RPAREN, ""));
+				push_token(Token(TokenKind::OP_RPAREN, ")"));
 				break;
 			case '=':
 				push_token(Token(TokenKind::OP_EQUAL, ""));
@@ -53,14 +62,21 @@ std::vector<ceres::Token> ceres::Lexer::scan(std::string s) {
 }
 
 void ceres::Lexer::identifier() {
+	// FIXME: ( and ) doesn't get tokenized properly
 	// Consume the identifier
 	std::string lexeme;
-	while (isalpha(peek()) || peek() == '_') {
+	while (isalpha(peek())) {
 		lexeme += peek();
 		advance();
 	}
 
-	push_token(Token(TokenKind::ATOM_IDENTIFIER, lexeme));
+	// Check if reserved keyword
+	if (std::find(reserved_kw.begin(), reserved_kw.end(), lexeme) != reserved_kw.end()) {
+		push_token(Token(TokenKind::KEYWORD, lexeme));
+	}
+	else {
+		push_token(Token(TokenKind::ATOM_IDENTIFIER, lexeme));
+	}
 }
 
 void ceres::Lexer::number() {

@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -11,6 +12,8 @@
 namespace ceres {
 	class Lexer {
 	public:
+		Lexer();
+
 		inline bool eof() { return pos >= src.length(); }
 		inline void advance() { pos++; }
 		inline void push_token(Token t) {
@@ -30,6 +33,7 @@ namespace ceres {
 	private:
 		size_t pos;
 		std::string src;
+		std::vector<std::string> reserved_kw;
 		std::vector<Token> tokens;
 	};
 };

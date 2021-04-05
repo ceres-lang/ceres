@@ -12,7 +12,7 @@ namespace ceres {
 		ATOM_NUMBER, ATOM_IDENTIFIER,
 
 		// Keywords
-		KW_LET, KW_PRINT
+		KEYWORD,
 	};
 
 	struct Token {
@@ -42,8 +42,7 @@ namespace ceres {
 			case TokenKind::ATOM_NUMBER: pretty_kind = "NUM"; break;
 			
 			// Keywords..
-			case TokenKind::KW_LET: pretty_kind = "KW_LET"; break;
-			case TokenKind::KW_PRINT: pretty_kind = "KW_PRINT"; break;
+			case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
 			default:
 				// TODO: error out, but just print unknown for now
 				pretty_kind = "UNKNOWN";

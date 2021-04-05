@@ -6,7 +6,7 @@ int main() {
 	std::printf("Ceres v0.0.1\n");
 
 	auto lexer = new ceres::Lexer();
-	std::vector<ceres::Token> tokens = lexer->scan("1 + 2");
+	std::vector<ceres::Token> tokens = lexer->scan("hello(5+1);");
 
 	for (auto token : tokens) {
 		// Print the lexed output
