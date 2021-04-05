@@ -10,6 +10,6 @@ int main() {
 
 	for (auto token : tokens) {
 		// Print the lexed output
-		std::cout << token.kind << ": " << token.data << "\n";
+		ceres::pretty_print_token(token);
 	}
 }

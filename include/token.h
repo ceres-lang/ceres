@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 
 namespace ceres {
@@ -20,4 +21,35 @@ namespace ceres {
 		int kind;
 		std::string data;
 	};
+
+	inline void pretty_print_token(Token t) {
+		// Pretty print the token type
+		std::string pretty_kind;
+
+		switch (t.kind) {
+			// Operators
+			case TokenKind::OP_ADD: pretty_kind = "ADD"; break;
+			case TokenKind::OP_SUB: pretty_kind = "SUB"; break;
+			case TokenKind::OP_MUL: pretty_kind = "MUL"; break;
+			case TokenKind::OP_DIV: pretty_kind = "DIV"; break;
+			case TokenKind::OP_LPAREN: pretty_kind = "LPAREN"; break;
+			case TokenKind::OP_RPAREN: pretty_kind = "RPAREN"; break;
+			case TokenKind::OP_EQUAL: pretty_kind = "EQUAL"; break;
+			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON"; break;
+
+			// Atoms
+			case TokenKind::ATOM_IDENTIFIER: pretty_kind = "IDENT"; break;
+			case TokenKind::ATOM_NUMBER: pretty_kind = "NUM"; break;
+			
+			// Keywords..
+			case TokenKind::KW_LET: pretty_kind = "KW_LET"; break;
+			case TokenKind::KW_PRINT: pretty_kind = "KW_PRINT"; break;
+			default:
+				// TODO: error out, but just print unknown for now
+				pretty_kind = "UNKNOWN";
+				break;
+		}
+
+		std::cout << pretty_kind << " = " << "\"" << t.data << "\"" << std::endl;
+	}
 }
