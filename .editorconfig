@@ -1,0 +1,5 @@
+# Use 4 tab size indents throughout the entire project
+
+[*]
+indent_style = tab
+indent_size = 4
