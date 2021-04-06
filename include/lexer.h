@@ -15,10 +15,11 @@ namespace ceres {
 		Lexer();
 
 		inline bool eof() { return pos >= src.length(); }
-		inline void advance() { pos++; }
+		inline void advance() { 
+			pos++;
+		}
 		inline void push_token(Token t) {
 			tokens.push_back(t);
-			advance();
 		}
 
 		inline char peek() {
@@ -28,6 +29,7 @@ namespace ceres {
 
 		std::vector<Token> scan(std::string s);
 		void number();
+		void string(char starting);
 		void identifier();
 
 	private:

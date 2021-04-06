@@ -9,7 +9,7 @@ namespace ceres {
 		OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_LPAREN, OP_RPAREN, OP_EQUAL, OP_SEMICOLON,
 
 		// Atoms
-		ATOM_NUMBER, ATOM_IDENTIFIER,
+		ATOM_NUMBER, ATOM_IDENTIFIER, ATOM_STRING,
 
 		// Keywords
 		KEYWORD,
@@ -40,6 +40,7 @@ namespace ceres {
 			// Atoms
 			case TokenKind::ATOM_IDENTIFIER: pretty_kind = "IDENT"; break;
 			case TokenKind::ATOM_NUMBER: pretty_kind = "NUM"; break;
+			case TokenKind::ATOM_STRING: pretty_kind = "STRING"; break;
 			
 			// Keywords..
 			case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
