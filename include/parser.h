@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <exception>
 #include <algorithm>
@@ -12,6 +12,7 @@
 namespace ceres {
 	class Parser {
 	public:
+		inline void advance() { pos++; }
 		inline bool eof() { return pos >= tokens.size(); }
 
 		inline Token peek() {
@@ -19,7 +20,13 @@ namespace ceres {
 			return tokens[pos];
 		}
 
-		
+		inline Token consume() {
+			// Peek to get the next token, then advance so we consume it
+			auto next_token = peek();
+			advance();
+
+			return next_token;
+		}
 	private:
 		size_t pos;
 		std::vector<Token> tokens;

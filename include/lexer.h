@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ctype.h>
-#include <stdio.h>
+#include <cctype>
+#include <cstdio>
 #include <iostream>
 #include <exception>
 #include <algorithm>
