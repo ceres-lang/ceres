@@ -9,11 +9,29 @@ namespace ceres {
 		OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_LPAREN, OP_RPAREN, OP_EQUAL, OP_SEMICOLON,
 		OP_TYPE_SPECIFIER,
 
-		// Atoms
-		ATOM_NUMBER, ATOM_IDENTIFIER, ATOM_STRING, ATOM_BOOL,
+		NUMBER,
+		IDENTIFIER, 
+		STRING_LIT, 
+		CHAR_LIT,
+		BOOL,
 
 		// Keywords
-		KEYWORD, TYPE
+		DEF,		// def
+		IF,			// if
+		ELSE_IF,	// elseif
+		ELSE,		// else
+		FOR,		// for
+		FUN,		// fun
+		WHILE,		// while
+		LOOP,		// loop
+		TRUE,		// true
+		FALSE,		// false
+
+		// Types
+		TYPE_INT,	// 32 bit int type
+		TYPE_CHAR,	// C char type
+		TYPE_BOOL,	// true | false
+		TYPE_STR,	// "string" | `string`
 	};
 
 	struct Token {
@@ -40,15 +58,23 @@ namespace ceres {
 			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON \";\""; break;
 			case TokenKind::OP_TYPE_SPECIFIER: pretty_kind = "TYPE_SPECIFIER \":\""; break;
 
-			// Atoms
-			case TokenKind::ATOM_IDENTIFIER: pretty_kind = "IDENT"; break;
-			case TokenKind::ATOM_NUMBER: pretty_kind = "NUM"; break;
-			case TokenKind::ATOM_STRING: pretty_kind = "STRING"; break;
-			case TokenKind::ATOM_BOOL: pretty_kind = "BOOL"; break;
+			case TokenKind::DEF: pretty_kind = "def"; break;
+			case TokenKind::IF: pretty_kind = "if"; break;
+			case TokenKind::ELSE_IF: pretty_kind = "elseif"; break;
+			case TokenKind::ELSE: pretty_kind = "else"; break;
+			case TokenKind::FOR: pretty_kind = "for"; break;
+			case TokenKind::FUN: pretty_kind = "fun"; break;
+			case TokenKind::WHILE: pretty_kind = "while"; break;
+			case TokenKind::LOOP: pretty_kind = "loop"; break;
+
+			case TokenKind::IDENTIFIER: pretty_kind = "IDENT"; break;
+			case TokenKind::NUMBER: pretty_kind = "NUM"; break;
+			case TokenKind::STRING_LIT: pretty_kind = "STRING"; break;
+			case TokenKind::BOOL: pretty_kind = "BOOL"; break;
 			
-			// Keywords..
-			case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
-			case TokenKind::TYPE: pretty_kind = "TYPE"; break;
+			// // Keywords..
+			// case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
+			// case TokenKind::TYPE: pretty_kind = "TYPE"; break;
 			default:
 				// TODO: error out, but just print unknown for now
 				pretty_kind = "UNKNOWN";

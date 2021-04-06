@@ -12,6 +12,6 @@ int main() {
 
 	for (auto& token : tokens) {
 		// Print the lexed output
-		ceres::pretty_print_token(token);
+		//ceres::pretty_print_token(token);
 	}
 }

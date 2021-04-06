@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "../include/token.h"
 
@@ -31,14 +32,14 @@ namespace ceres {
 
 		std::vector<Token> scan(const std::string& s);
 		void number();
+		void char_lit();
 		void string(char starting);
 		void identifier();
 
 	private:
 		size_t pos;
 		std::string src;
-		std::vector<std::string> reserved_kw;
-		std::vector<std::string> reserved_types;
+		std::unordered_map<std::string, TokenKind> keywords;
 
 		std::vector<Token> tokens;
 	};

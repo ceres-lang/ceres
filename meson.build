@@ -1,4 +1,5 @@
-project('ceres', 'cpp')
+project('ceres', 'cpp', 
+        default_options : ['cpp_std=c++20'])
 project_sources = []
 
 inc_dir = include_directories('include')

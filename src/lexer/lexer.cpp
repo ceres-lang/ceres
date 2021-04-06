@@ -4,8 +4,22 @@
 namespace ceres {
 	Lexer::Lexer() {
 		// Populate the list of reserved keywords
-		reserved_kw = {"def", "if", "else", "for", "proc"};
-		reserved_types = {"int", "bool", "str"};
+
+		keywords.insert({"def", 			TokenKind::DEF});
+		keywords.insert({"if", 				TokenKind::IF});
+		keywords.insert({"elseif", 			TokenKind::ELSE_IF});
+		keywords.insert({"else", 			TokenKind::ELSE});
+		keywords.insert({"for", 			TokenKind::FOR});
+		keywords.insert({"fun",				TokenKind::FUN});
+		keywords.insert({"while",			TokenKind::WHILE});
+		keywords.insert({"loop",			TokenKind::LOOP});
+		keywords.insert({"true",			TokenKind::TRUE});
+		keywords.insert({"false",			TokenKind::FALSE});
+
+		keywords.insert({"int",				TokenKind::TYPE_INT});
+		keywords.insert({"char",			TokenKind::TYPE_CHAR});
+		keywords.insert({"bool",			TokenKind::TYPE_BOOL});
+		keywords.insert({"str",				TokenKind::TYPE_STR});
 	}
 
 	std::vector<Token> Lexer::scan(const std::string& s) {
@@ -33,7 +47,6 @@ namespace ceres {
 					break;
 				case '/':
 					advance();
-
 					if (peek() == '/') {
 						while (peek() != '\n') advance();
 					}
@@ -54,13 +67,16 @@ namespace ceres {
 					push_token(Token(TokenKind::OP_EQUAL));
 					advance();
 					break;
-				case ':': {
+				case ':':
 					push_token(Token(TokenKind::OP_TYPE_SPECIFIER));
+					advance();
 					break;
-				}
 				case ';':
 					push_token(Token(TokenKind::OP_SEMICOLON));
 					advance();
+					break;
+				case '\'':
+					char_lit();
 					break;
 				case '"':
 					string('"');
@@ -92,20 +108,15 @@ namespace ceres {
 			advance();
 		}
 
-		// Check if reserved keyword
-		if (std::find(reserved_kw.begin(), reserved_kw.end(), lexeme) != reserved_kw.end()) {
-			push_token(Token(TokenKind::KEYWORD, lexeme));
-		}
-		else if (std::find(reserved_types.begin(), reserved_types.end(), lexeme) != reserved_types.end()) {
-			// Reserved type
-			push_token(Token(TokenKind::TYPE, lexeme));
-		}
-		else if (lexeme == "true" || lexeme == "false") {
-			// Boolean, not a keyword or identifier
-			push_token(Token(TokenKind::ATOM_BOOL, lexeme));
+		if (keywords.count(lexeme) == 1) {
+			// Keyword
+			auto it = keywords.find(lexeme);
+			TokenKind kind = it->second;
+
+			push_token(Token(kind));
 		}
 		else {
-			push_token(Token(TokenKind::ATOM_IDENTIFIER, lexeme));
+			push_token(Token(TokenKind::IDENTIFIER, lexeme));
 		}
 	}
 
@@ -117,8 +128,48 @@ namespace ceres {
 			advance();
 		}
 
-		push_token(Token(TokenKind::ATOM_NUMBER, lexeme));
+		push_token(Token(TokenKind::NUMBER, lexeme));
 		//advance();
+	}
+
+	void Lexer::char_lit() {
+		// Consume a single character. If we consume more, error out
+		std::string lexeme;
+
+		advance();
+		while (peek() != '\'') {
+			// TODO: make this a method so we can implement for character literals
+			if (peek() == '\\') {
+				advance(); // skip over the slash
+				switch (peek()) {
+					case 'n':
+						lexeme += '\n';
+						break;
+					case 'b':
+						lexeme += '\b';
+						break;
+					case 't':
+						lexeme += '\t';
+						break;
+					default:
+						lexeme += peek();
+						break;
+				}
+			}
+			else {
+				lexeme += peek();
+			}
+			advance();
+		}
+
+		// Check the length of the lexeme
+		advance();
+		if (lexeme.length() > 1) {
+			print_error(Location(pos, 0), "unexpected string \"" + lexeme + "\" in character literal");
+		}
+		else {
+			push_token(Token(TokenKind::CHAR_LIT, lexeme));
+		}
 	}
 
 	void Lexer::string(char starting) {
@@ -153,7 +204,6 @@ namespace ceres {
 		}
 
 		advance();
-		push_token(Token(TokenKind::ATOM_STRING, lexeme));
-		//std::cout << "STRING " << lexeme << std::endl;
+		push_token(Token(TokenKind::STRING_LIT, lexeme));
 	}
 }
