@@ -1,7 +1,7 @@
 #include <string>
 #include <type_traits>
 
-#include "../../include/ast/types.h"
+#include "../../include/ast/value.h"
 
 namespace ceres {
 	template <typename T>
@@ -9,19 +9,19 @@ namespace ceres {
 		// Template magic to initialize a ValueNode with a primitive type
 
 		if (std::is_same<T, int>::value) {
-			this->tag = TypeTag::INT;
+			this->tag = TypeTag::TYPE_INT;
 			this->value = static_cast<int>(t);
 		}
 		else if (std::is_same<T, char>::value) {
-			this->tag = TypeTag::CHAR;
+			this->tag = TypeTag::TYPE_CHAR;
 			this->value = static_cast<char>(t);
 		}
 		else if (std::is_same<T, char>::value) {
-			this->tag = TypeTag::BOOLEAN;
+			this->tag = TypeTag::TYPE_BOOLEAN;
 			this->value = static_cast<bool>(t);
 		}
 		else if (std::is_same<T, char>::value) {
-			this->tag = TypeTag::STRING;
+			this->tag = TypeTag::TYPE_STRING;
 			this->value = static_cast<std::string>(t);
 		}
 	}

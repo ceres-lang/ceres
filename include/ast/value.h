@@ -7,10 +7,10 @@
 
 namespace ceres {
 	enum class TypeTag {
-		INT,
-		CHAR,
-		STRING,
-		BOOLEAN
+		TYPE_INT,
+		TYPE_CHAR,
+		TYPE_STRING,
+		TYPE_BOOLEAN
 	};
 
 	/**
