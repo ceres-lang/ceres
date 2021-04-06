@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <iostream>
+#include <exception>
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -18,6 +19,7 @@ namespace ceres {
 		inline void advance() { 
 			pos++;
 		}
+
 		inline void push_token(Token t) {
 			tokens.push_back(t);
 		}
@@ -27,7 +29,7 @@ namespace ceres {
 			return src[pos];
 		}
 
-		std::vector<Token> scan(std::string s);
+		std::vector<Token> scan(const std::string& s);
 		void number();
 		void string(char starting);
 		void identifier();

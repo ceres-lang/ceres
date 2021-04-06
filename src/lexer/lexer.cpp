@@ -1,4 +1,5 @@
 #include "include/lexer.h"
+#include "include/error.h"
 
 namespace ceres {
 	Lexer::Lexer() {
@@ -10,7 +11,7 @@ namespace ceres {
 		reserved_kw.push_back("print");
 	}
 
-	std::vector<Token> Lexer::scan(std::string s) {
+	std::vector<Token> Lexer::scan(const std::string& s) {
 		this->src = s;
 
 		while (!eof()) {
@@ -71,8 +72,11 @@ namespace ceres {
 						number();
 					else if (isalpha(peek()))
 						identifier();
-					else
-						std::printf("error: invalid character %c\n", peek());
+					else {
+						ceres::print_error(Location(pos, 0), std::string("invalid character ") + peek());
+						advance();
+					}
+						//throw std::runtime_error(std::string("error: invalid character ") + peek() + " at position " + std::to_string(pos));
 					break;
 			}
 		}
@@ -117,6 +121,8 @@ namespace ceres {
 		// Skip over the starting character
 		advance(); 
 		while (peek() != starting) {
+			// TODO: implement escape codes
+
 			lexeme += peek();
 			advance();
 		}
