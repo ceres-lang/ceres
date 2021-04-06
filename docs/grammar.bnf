@@ -12,8 +12,8 @@ Expr ::= Integer
      | Expr "/" Expr
 
 # Variable declarations
-# def count :: int = 3;
-VarDeclare ::= "def" Identifier "::" Type "=" Value ";"
+# def count : int = 3;
+VarDeclare ::= "def" Identifier ":" Type "=" Value ";"
 
 # Variable assignment
 # count = count + 1;

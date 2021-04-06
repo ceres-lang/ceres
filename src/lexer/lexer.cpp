@@ -55,10 +55,7 @@ namespace ceres {
 					advance();
 					break;
 				case ':': {
-					advance();
-					if (peek() == ':') {
-						push_token(Token(TokenKind::OP_TYPE_SPECIFIER));
-					}
+					push_token(Token(TokenKind::OP_TYPE_SPECIFIER));
 					break;
 				}
 				case ';':

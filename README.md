@@ -12,7 +12,7 @@ meson compile -C builddir && ./builddir/ceres
 
 ## Example
 ```scala
-def count :: int = 3;
+def count : int = 3;
 println("hello world\n");
 ```
 

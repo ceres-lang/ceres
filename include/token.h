@@ -38,7 +38,7 @@ namespace ceres {
 			case TokenKind::OP_RPAREN: pretty_kind = "RPAREN \")\""; break;
 			case TokenKind::OP_EQUAL: pretty_kind = "EQUAL \"=\""; break;
 			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON \";\""; break;
-			case TokenKind::OP_TYPE_SPECIFIER: pretty_kind = "TYPE_SPECIFIER \"::\""; break;
+			case TokenKind::OP_TYPE_SPECIFIER: pretty_kind = "TYPE_SPECIFIER \":\""; break;
 
 			// Atoms
 			case TokenKind::ATOM_IDENTIFIER: pretty_kind = "IDENT"; break;
