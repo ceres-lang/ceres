@@ -7,15 +7,17 @@ namespace ceres {
 	enum TokenKind {
 		// Operators
 		OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_LPAREN, OP_RPAREN, OP_EQUAL, OP_SEMICOLON,
+		OP_TYPE_SPECIFIER,
 
 		// Atoms
 		ATOM_NUMBER, ATOM_IDENTIFIER, ATOM_STRING, ATOM_BOOL,
 
 		// Keywords
-		KEYWORD,
+		KEYWORD, TYPE
 	};
 
 	struct Token {
+		Token(int k) : kind(k), data("") {}
 		Token(int k, std::string d) : kind(k), data(d) {}
 
 		int kind;
@@ -28,28 +30,36 @@ namespace ceres {
 
 		switch (t.kind) {
 			// Operators
-			case TokenKind::OP_ADD: pretty_kind = "ADD"; break;
-			case TokenKind::OP_SUB: pretty_kind = "SUB"; break;
-			case TokenKind::OP_MUL: pretty_kind = "MUL"; break;
-			case TokenKind::OP_DIV: pretty_kind = "DIV"; break;
-			case TokenKind::OP_LPAREN: pretty_kind = "LPAREN"; break;
-			case TokenKind::OP_RPAREN: pretty_kind = "RPAREN"; break;
-			case TokenKind::OP_EQUAL: pretty_kind = "EQUAL"; break;
-			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON"; break;
+			case TokenKind::OP_ADD: pretty_kind = "ADD \"+\""; break;
+			case TokenKind::OP_SUB: pretty_kind = "SUB \"-\""; break;
+			case TokenKind::OP_MUL: pretty_kind = "MUL \"*\""; break;
+			case TokenKind::OP_DIV: pretty_kind = "DIV \"/\""; break;
+			case TokenKind::OP_LPAREN: pretty_kind = "LPAREN \"(\""; break;
+			case TokenKind::OP_RPAREN: pretty_kind = "RPAREN \")\""; break;
+			case TokenKind::OP_EQUAL: pretty_kind = "EQUAL \"=\""; break;
+			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON \";\""; break;
+			case TokenKind::OP_TYPE_SPECIFIER: pretty_kind = "TYPE_SPECIFIER \"::\""; break;
 
 			// Atoms
 			case TokenKind::ATOM_IDENTIFIER: pretty_kind = "IDENT"; break;
 			case TokenKind::ATOM_NUMBER: pretty_kind = "NUM"; break;
 			case TokenKind::ATOM_STRING: pretty_kind = "STRING"; break;
+			case TokenKind::ATOM_BOOL: pretty_kind = "BOOL"; break;
 			
 			// Keywords..
 			case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
+			case TokenKind::TYPE: pretty_kind = "TYPE"; break;
 			default:
 				// TODO: error out, but just print unknown for now
 				pretty_kind = "UNKNOWN";
 				break;
 		}
 
-		std::cout << pretty_kind << " = " << "\"" << t.data << "\"" << std::endl;
+		if (t.data.length() > 0) {
+			std::cout << pretty_kind << " = " << "\"" << t.data << "\"" << std::endl;
+		}
+		else {
+			std::cout << pretty_kind << std::endl;
+		}
 	}
 }

@@ -4,11 +4,8 @@
 namespace ceres {
 	Lexer::Lexer() {
 		// Populate the list of reserved keywords
-		reserved_kw.push_back("def");
-		reserved_kw.push_back("if");
-		reserved_kw.push_back("else");
-		reserved_kw.push_back("func");
-		reserved_kw.push_back("print");
+		reserved_kw = {"def", "if", "else", "for", "proc"};
+		reserved_types = {"int", "bool", "str"};
 	}
 
 	std::vector<Token> Lexer::scan(const std::string& s) {
@@ -23,15 +20,15 @@ namespace ceres {
 					advance();
 					break;
 				case '+':
-					push_token(Token(TokenKind::OP_ADD, ""));
+					push_token(Token(TokenKind::OP_ADD));
 					advance();
 					break;
 				case '-':
-					push_token(Token(TokenKind::OP_SUB, ""));
+					push_token(Token(TokenKind::OP_SUB));
 					advance();
 					break;
 				case '*':
-					push_token(Token(TokenKind::OP_MUL, ""));
+					push_token(Token(TokenKind::OP_MUL));
 					advance();
 					break;
 				case '/':
@@ -42,23 +39,30 @@ namespace ceres {
 					}
 					else {
 						// Not a comment
-						push_token(Token(TokenKind::OP_DIV, ""));
+						push_token(Token(TokenKind::OP_DIV));
 					}
 					break;
 				case '(':
-					push_token(Token(TokenKind::OP_LPAREN, "("));
+					push_token(Token(TokenKind::OP_LPAREN));
 					advance();
 					break;
 				case ')':
-					push_token(Token(TokenKind::OP_RPAREN, ")"));
+					push_token(Token(TokenKind::OP_RPAREN));
 					advance();
 					break;
 				case '=':
-					push_token(Token(TokenKind::OP_EQUAL, ""));
+					push_token(Token(TokenKind::OP_EQUAL));
 					advance();
 					break;
+				case ':': {
+					advance();
+					if (peek() == ':') {
+						push_token(Token(TokenKind::OP_TYPE_SPECIFIER));
+					}
+					break;
+				}
 				case ';':
-					push_token(Token(TokenKind::OP_SEMICOLON, ""));
+					push_token(Token(TokenKind::OP_SEMICOLON));
 					advance();
 					break;
 				case '"':
@@ -73,10 +77,9 @@ namespace ceres {
 					else if (isalpha(peek()))
 						identifier();
 					else {
-						ceres::print_error(Location(pos, 0), std::string("invalid character ") + peek());
+						print_error(Location(pos, 0), std::string("invalid character ") + peek());
 						advance();
 					}
-						//throw std::runtime_error(std::string("error: invalid character ") + peek() + " at position " + std::to_string(pos));
 					break;
 			}
 		}
@@ -85,10 +88,9 @@ namespace ceres {
 	}
 
 	void Lexer::identifier() {
-		// FIXME: ( and ) doesn't get tokenized properly
 		// Consume the identifier
 		std::string lexeme;
-		while (isalpha(peek())) {
+		while (isalnum(peek()) || peek() == '_' ) {
 			lexeme += peek();
 			advance();
 		}
@@ -96,6 +98,10 @@ namespace ceres {
 		// Check if reserved keyword
 		if (std::find(reserved_kw.begin(), reserved_kw.end(), lexeme) != reserved_kw.end()) {
 			push_token(Token(TokenKind::KEYWORD, lexeme));
+		}
+		else if (std::find(reserved_types.begin(), reserved_types.end(), lexeme) != reserved_types.end()) {
+			// Reserved type
+			push_token(Token(TokenKind::TYPE, lexeme));
 		}
 		else if (lexeme == "true" || lexeme == "false") {
 			// Boolean, not a keyword or identifier

@@ -38,6 +38,8 @@ namespace ceres {
 		size_t pos;
 		std::string src;
 		std::vector<std::string> reserved_kw;
+		std::vector<std::string> reserved_types;
+
 		std::vector<Token> tokens;
 	};
 };
