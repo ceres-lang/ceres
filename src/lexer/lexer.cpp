@@ -4,7 +4,7 @@
 namespace ceres {
 	Lexer::Lexer() {
 		// Populate the list of reserved keywords
-		reserved_kw.push_back("let");
+		reserved_kw.push_back("def");
 		reserved_kw.push_back("if");
 		reserved_kw.push_back("else");
 		reserved_kw.push_back("func");
@@ -97,6 +97,10 @@ namespace ceres {
 		if (std::find(reserved_kw.begin(), reserved_kw.end(), lexeme) != reserved_kw.end()) {
 			push_token(Token(TokenKind::KEYWORD, lexeme));
 		}
+		else if (lexeme == "true" || lexeme == "false") {
+			// Boolean, not a keyword or identifier
+			push_token(Token(TokenKind::ATOM_BOOL, lexeme));
+		}
 		else {
 			push_token(Token(TokenKind::ATOM_IDENTIFIER, lexeme));
 		}
@@ -121,9 +125,27 @@ namespace ceres {
 		// Skip over the starting character
 		advance(); 
 		while (peek() != starting) {
-			// TODO: implement escape codes
-
-			lexeme += peek();
+			// TODO: make this a method so we can implement for character literals
+			if (peek() == '\\') {
+				advance(); // skip over the slash
+				switch (peek()) {
+					case 'n':
+						lexeme += '\n';
+						break;
+					case 'b':
+						lexeme += '\b';
+						break;
+					case 't':
+						lexeme += '\t';
+						break;
+					default:
+						lexeme += peek();
+						break;
+				}
+			}
+			else {
+				lexeme += peek();
+			}
 			advance();
 		}
 

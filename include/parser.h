@@ -18,6 +18,8 @@ namespace ceres {
 			if (eof()) throw std::runtime_error("eof reached while peeking next token");
 			return tokens[pos];
 		}
+
+		
 	private:
 		size_t pos;
 		std::vector<Token> tokens;

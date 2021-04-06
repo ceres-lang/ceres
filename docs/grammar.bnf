@@ -1,0 +1,32 @@
+%precedence + 10
+%precedence - 10
+%precedence * 20    # * and / have higher precedence than + and -
+%precedence / 20
+
+Expr ::= Integer 
+     | Identifier
+     | StringLit
+     | Expr "+" Expr
+     | Expr "-" Expr
+     | Expr "*" Expr
+     | Expr "/" Expr
+
+# Variable declarations
+# def count :: int = 3;
+VarDeclare ::= "def" Identifier "::" Type "=" Value ";"
+
+# Variable assignment
+# count = count + 1;
+VarAssign ::= Identifier "=" Value ";"
+
+# Atoms
+Identifier ::= [A-Za-z_]+
+StringLit  ::= StringDelim [StringDelim^]+ StringDelim
+StringDelim ::= "\""
+            |   "`"
+
+Type ::= "int" | "str" | "bool" 
+Value ::= Expr
+
+Integer ::= [0-9]+
+%comment "//[^\n]"
