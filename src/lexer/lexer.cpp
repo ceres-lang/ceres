@@ -1,11 +1,12 @@
-#include "../include/lexer.h"
-#include "../include/error.h"
+#include "../../include/lexer.h"
+#include "../../include/error.h"
 
 namespace ceres {
 	Lexer::Lexer() {
 		// Populate the list of reserved keywords
 
 		keywords.insert({"case",			TokenKind::CASE});
+		keywords.insert({"const",			TokenKind::CONST});
 		keywords.insert({"def", 			TokenKind::DEF});
 		keywords.insert({"if", 				TokenKind::IF});
 		keywords.insert({"elseif", 			TokenKind::ELSE_IF});
@@ -36,15 +37,15 @@ namespace ceres {
 					advance();
 					break;
 				case '+':
-					push_token(Token(TokenKind::OP_ADD));
+					push_token(Token(TokenKind::PLUS));
 					advance();
 					break;
 				case '-':
-					push_token(Token(TokenKind::OP_SUB));
+					push_token(Token(TokenKind::MINUS));
 					advance();
 					break;
 				case '*':
-					push_token(Token(TokenKind::OP_MUL));
+					push_token(Token(TokenKind::STAR));
 					advance();
 					break;
 				case '/':
@@ -54,27 +55,27 @@ namespace ceres {
 					}
 					else {
 						// Not a comment
-						push_token(Token(TokenKind::OP_DIV));
+						push_token(Token(TokenKind::SLASH));
 					}
 					break;
 				case '(':
-					push_token(Token(TokenKind::OP_LPAREN));
+					push_token(Token(TokenKind::LPAREN));
 					advance();
 					break;
 				case ')':
-					push_token(Token(TokenKind::OP_RPAREN));
+					push_token(Token(TokenKind::RPAREN));
 					advance();
 					break;
 				case '=':
-					push_token(Token(TokenKind::OP_EQUAL));
+					push_token(Token(TokenKind::EQUAL));
 					advance();
 					break;
 				case ':':
-					push_token(Token(TokenKind::OP_TYPE_SPECIFIER));
+					push_token(Token(TokenKind::TYPE_SPECIFIER));
 					advance();
 					break;
 				case ';':
-					push_token(Token(TokenKind::OP_SEMICOLON));
+					push_token(Token(TokenKind::SEMICOLON));
 					advance();
 					break;
 				case '\'':

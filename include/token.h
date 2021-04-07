@@ -6,8 +6,15 @@
 namespace ceres {
 	enum TokenKind {
 		// Operators
-		OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_LPAREN, OP_RPAREN, OP_EQUAL, OP_SEMICOLON,
-		OP_TYPE_SPECIFIER,
+		PLUS,
+		MINUS,
+		STAR,
+		SLASH, 
+		LPAREN, 
+		RPAREN, 
+		EQUAL, 
+		SEMICOLON,
+		TYPE_SPECIFIER,
 
 		NUMBER,
 		IDENTIFIER, 
@@ -17,6 +24,7 @@ namespace ceres {
 
 		// Keywords
 		CASE,		// case
+		CONST,		// const
 		DEF,		// def
 		IF,			// if
 		ELSE_IF,	// elseif
