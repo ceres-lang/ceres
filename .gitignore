@@ -42,7 +42,6 @@
 *.out
 *.app
 
-# Meson
-builddir/
+ceres
 
 # End of https://www.toptal.com/developers/gitignore/api/c++
