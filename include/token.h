@@ -16,12 +16,14 @@ namespace ceres {
 		BOOL,
 
 		// Keywords
+		CASE,		// case
 		DEF,		// def
 		IF,			// if
 		ELSE_IF,	// elseif
 		ELSE,		// else
 		FOR,		// for
 		FUN,		// fun
+		SWITCH,		// switch
 		WHILE,		// while
 		LOOP,		// loop
 		TRUE,		// true

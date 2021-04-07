@@ -10,9 +10,9 @@
 
 namespace ceres {
 	/**
-	 * AST node to represent an operator
+	 * AST node to represent an expression
 	 */
-	struct OperatorNode: ASTNode {
+	struct ExpressionNode: ASTNode {
 	public:
 		ASTNode left;
 		TokenKind op;

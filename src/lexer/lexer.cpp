@@ -1,16 +1,18 @@
-#include "include/lexer.h"
-#include "include/error.h"
+#include "../include/lexer.h"
+#include "../include/error.h"
 
 namespace ceres {
 	Lexer::Lexer() {
 		// Populate the list of reserved keywords
 
+		keywords.insert({"case",			TokenKind::CASE});
 		keywords.insert({"def", 			TokenKind::DEF});
 		keywords.insert({"if", 				TokenKind::IF});
 		keywords.insert({"elseif", 			TokenKind::ELSE_IF});
 		keywords.insert({"else", 			TokenKind::ELSE});
 		keywords.insert({"for", 			TokenKind::FOR});
 		keywords.insert({"fun",				TokenKind::FUN});
+		keywords.insert({"switch",			TokenKind::SWITCH});
 		keywords.insert({"while",			TokenKind::WHILE});
 		keywords.insert({"loop",			TokenKind::LOOP});
 		keywords.insert({"true",			TokenKind::TRUE});

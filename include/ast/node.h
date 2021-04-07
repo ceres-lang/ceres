@@ -6,6 +6,6 @@ namespace ceres {
 	};
 	
 	struct ASTNode {
-		virtual void accept(NodeVisitor& v) = 0;
+		virtual void accept(NodeVisitor& v) {}
 	};
 }

@@ -7,11 +7,16 @@
 #include <string>
 #include <vector>
 
-#include "include/token.h"
+#include "token.h"
+#include "error.h"
+#include "ast/node.h"
+#include "ast/value.h"
 
 namespace ceres {
 	class Parser {
 	public:
+		std::vector<Token> tokens;
+
 		inline void advance() { pos++; }
 		inline bool eof() { return pos >= tokens.size(); }
 
@@ -27,8 +32,11 @@ namespace ceres {
 
 			return next_token;
 		}
+
+		IdentifierNode parse_identifier();
+		ValueNode parse_number();
+		ValueNode parse_string();
 	private:
 		size_t pos;
-		std::vector<Token> tokens;
-	}
-}
+	};
+};

@@ -16,8 +16,9 @@ namespace ceres {
 		// TODO: implement later
 		bool is_constant;
 		std::string name;
-		ValueNode value;
+		ValueNode val;
 
+		VariableDeclarationNode(bool constant, std::string name, ValueNode val);
 		virtual void accept(NodeVisitor& visitor);
 	};
 
