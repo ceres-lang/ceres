@@ -1,9 +1,20 @@
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <cstdio>
 
 #include "../include/token.h"
 #include "../include/lexer.h"
 #include "../include/parser.h"
+
+std::string read_file_contents(const std::string& path) {
+	std::ifstream file(path);
+
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+
+	return buffer.str();
+}
 
 int main() {
 	std::printf("Ceres v0.0.1\n");
@@ -11,17 +22,11 @@ int main() {
 	auto lexer = new ceres::Lexer();
 	auto parser = new ceres::Parser();
 
-	parser->tokens.push_back(ceres::Token(ceres::TokenKind::IDENTIFIER, "hello_world123"));
-	auto vnode = parser->parse_identifier();
-
-	std::cout << "IDENT VAL " << vnode.name << std::endl;
-
-	//std::vector<ceres::Token> tokens = lexer->scan(R"(hello="hello \"world\"\\n")");
-
-	auto tokens = lexer->scan(R"(def hello_world123 : bool = true;)");
+	//auto tokens = lexer->scan(R"(def hello_world123 : bool == = true;)");
+	auto tokens = lexer->scan(read_file_contents("docs/examples/hello.crs"));
 
 	for (auto& token : tokens) {
 		// Print the lexed output
-		//ceres::pretty_print_token(token);
+		ceres::pretty_print_token(token);
 	}
 }

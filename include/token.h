@@ -11,10 +11,23 @@ namespace ceres {
 		STAR,
 		SLASH, 
 		LPAREN, 
-		RPAREN, 
-		EQUAL, 
+		RPAREN,
+		LBRACE,
+		RBRACE,
+		EQUAL,
 		SEMICOLON,
-		TYPE_SPECIFIER,
+		ARROW,
+		DOT,
+		COLON,
+
+		// Comparison and Bitwise operators
+		NOT,
+		LESS, 
+		LESS_EQUAL,
+		GREATER,
+		GREATER_EQUAL,
+		EQUAL_EQUAL, 
+		NOT_EQUAL,
 
 		NUMBER,
 		IDENTIFIER, 
@@ -30,7 +43,7 @@ namespace ceres {
 		ELSE_IF,	// elseif
 		ELSE,		// else
 		FOR,		// for
-		FUN,		// fun
+		FN,			// fn
 		SWITCH,		// switch
 		WHILE,		// while
 		LOOP,		// loop
@@ -52,44 +65,63 @@ namespace ceres {
 		std::string data;
 	};
 
+	inline std::string prettify_token_type(int kind) {
+		switch (kind) {
+			// Operators
+			case PLUS: return "PLUS";
+			case MINUS: return "MINUS";
+			case STAR: return "STAR";
+			case SLASH: return "SLASH";
+			case LPAREN: return "LPAREN";
+			case RPAREN: return "RPAREN";
+			case LBRACE: return "LBRACE";
+			case RBRACE: return "RBRACE";
+			case COLON: return "COLON";
+			case SEMICOLON: return "SEMICOLON";
+			case ARROW: return "ARROW";
+			case EQUAL: return "EQUAL";
+
+			case EQUAL_EQUAL: return "EQUAL_EQUAL";
+			case LESS: return "LESS";
+			case LESS_EQUAL: return "LESS_EQUAL";
+			case GREATER: return "GREATER";
+			case GREATER_EQUAL: return "GREATER_EQUAL";
+			case NOT: return "NOT";
+			case NOT_EQUAL: return "NOT_EQUAL";
+
+			case CASE: return "case";
+			case CONST: return "const";
+			case DEF: return "def";
+			case IF: return "if";
+			case ELSE_IF: return "else if";
+			case ELSE: return "else";
+			case FOR: return "for";
+			case FN: return "fn";
+			case SWITCH: return "switch";
+			case WHILE: return "while";
+			case LOOP: return "loop";
+			case TRUE: return "true";
+			case FALSE: return "false";
+
+			case NUMBER: return "NUMBER";
+			case IDENTIFIER: return "IDENTIFIER";
+			case STRING_LIT: return "STRING_LIT";
+			case CHAR_LIT: return "CHAR_LIT";
+			case BOOL: return "BOOL";
+
+			// Type
+			case TYPE_INT: return "int";
+			case TYPE_CHAR: return "char";
+			case TYPE_BOOL: return "bool";
+			case TYPE_STR: return "str";
+
+			default: return "UNKNOWN_TOKEN";
+		}
+	}
+
 	inline void pretty_print_token(Token t) {
 		// Pretty print the token type
-		std::string pretty_kind;
-
-		switch (t.kind) {
-			// Operators
-			case TokenKind::OP_ADD: pretty_kind = "ADD \"+\""; break;
-			case TokenKind::OP_SUB: pretty_kind = "SUB \"-\""; break;
-			case TokenKind::OP_MUL: pretty_kind = "MUL \"*\""; break;
-			case TokenKind::OP_DIV: pretty_kind = "DIV \"/\""; break;
-			case TokenKind::OP_LPAREN: pretty_kind = "LPAREN \"(\""; break;
-			case TokenKind::OP_RPAREN: pretty_kind = "RPAREN \")\""; break;
-			case TokenKind::OP_EQUAL: pretty_kind = "EQUAL \"=\""; break;
-			case TokenKind::OP_SEMICOLON: pretty_kind = "SEMICOLON \";\""; break;
-			case TokenKind::OP_TYPE_SPECIFIER: pretty_kind = "TYPE_SPECIFIER \":\""; break;
-
-			case TokenKind::DEF: pretty_kind = "def"; break;
-			case TokenKind::IF: pretty_kind = "if"; break;
-			case TokenKind::ELSE_IF: pretty_kind = "elseif"; break;
-			case TokenKind::ELSE: pretty_kind = "else"; break;
-			case TokenKind::FOR: pretty_kind = "for"; break;
-			case TokenKind::FUN: pretty_kind = "fun"; break;
-			case TokenKind::WHILE: pretty_kind = "while"; break;
-			case TokenKind::LOOP: pretty_kind = "loop"; break;
-
-			case TokenKind::IDENTIFIER: pretty_kind = "IDENT"; break;
-			case TokenKind::NUMBER: pretty_kind = "NUM"; break;
-			case TokenKind::STRING_LIT: pretty_kind = "STRING"; break;
-			case TokenKind::BOOL: pretty_kind = "BOOL"; break;
-			
-			// // Keywords..
-			// case TokenKind::KEYWORD: pretty_kind = "KEYWORD"; break;
-			// case TokenKind::TYPE: pretty_kind = "TYPE"; break;
-			default:
-				// TODO: error out, but just print unknown for now
-				pretty_kind = "UNKNOWN";
-				break;
-		}
+		std::string pretty_kind = prettify_token_type(t.kind);
 
 		if (t.data.length() > 0) {
 			std::cout << pretty_kind << " = " << "\"" << t.data << "\"" << std::endl;

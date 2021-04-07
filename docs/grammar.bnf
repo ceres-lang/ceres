@@ -13,7 +13,15 @@ Expr ::= Integer
 
 # Variable declarations
 # def count : int = 3;
-VarDeclare ::= "def" Identifier ":" Type "=" Value ";"
+VarDeclare ::= "def" Identifier ":" (Type "=" Value | StructDecl) ";"
+
+StructDecl ::= "struct" "=" StructBlock
+StructField ::= Identifier ":" Type ";"
+StructBlock ::= "{" (StructField)+ "}"
+
+# Functions are defined with the fn keyword
+Function ::= "fn" Identifier "(" FuncParam* ")" "->" Type Block
+FuncParam ::= Identifier ":" Type
 
 # Variable assignment
 # count = count + 1;
@@ -25,7 +33,7 @@ StringLit  ::= StringDelim [StringDelim^]+ StringDelim
 StringDelim ::= "\""
             |   "`"
 
-Type ::= "int" | "str" | "bool" 
+Type ::= "int" | "str" | "bool"
 Value ::= Expr
 
 Integer ::= [0-9]+

@@ -31,10 +31,14 @@ namespace ceres {
 		}
 
 		std::vector<Token> scan(const std::string& s);
-		void number();
-		void char_lit();
-		void string(char starting);
-		void identifier();
+
+		// Break up the scan method so its not a mess
+		void scan_operator();
+
+		void scan_number();
+		void scan_char_lit();
+		void scan_string(char starting);
+		void scan_identifier();
 
 	private:
 		size_t pos;

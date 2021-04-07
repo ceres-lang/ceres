@@ -1,3 +1,4 @@
 fn main() {
-	printfln("hello world");
+	def abc : int = 5;
+	printf("hello world");
 }

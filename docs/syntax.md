@@ -57,24 +57,13 @@ while (!stopped) {
 ## Functions
 ---
 ```kotlin
-fun add_two(a : int, b : int): int {
+fn add_two (a : int, b : int) -> int {
     def result = a + b;
     return result;
 }
 
-fun bark(self: &Dog) {
-    // special cases for passing a struct as the first parameter
-    io::printf("bark");
-}
-
 // calling it 
 add_two(5, 1); // => 6
-
-// this is valid
-bark(my_dog);
-
-// this too is valid
-my_dog::bark(); // NOTE: this is NOT oop, just syntax sugar for the above
 ```
 
 ## Formal Grammar
